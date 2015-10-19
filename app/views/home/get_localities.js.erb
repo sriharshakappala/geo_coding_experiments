@@ -1,0 +1,7 @@
+<% if @localities.present? %>
+  <%= select_tag "locality", options_from_collection_for_select(@localities, "id", "name"), :prompt => "Select locality" %>
+<% else %>
+  <select id="suffix">
+    <option value="">Select locality</option>
+  </select>
+<% end %>

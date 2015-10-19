@@ -1,0 +1,32 @@
+<%= select_tag "city", options_from_collection_for_select(City.all, "id", "name"), :prompt => "Select city" %>
+
+<br><br><br>
+
+<div id="replace_localities">
+  <select id="suffix">
+    <option value="">Select locality</option>
+  </select>
+</div>
+
+<br><br><br>
+
+<div id="map" style="width: 500px; height: 700px"></div>
+
+<script>
+// Load localities on change of City
+$("#city").change(function() {
+  $.ajax({
+    type: "POST",
+    url: '/get_localities',
+    dataType: 'html',
+    data: { city_id: $(this).val() },
+    success: function(data) {
+      $("#replace_localities").html(data);
+    }
+  });
+});
+// Load localities on change of City
+
+// Init Default Map
+// Init Default Map
+</script>
