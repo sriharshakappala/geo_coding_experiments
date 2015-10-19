@@ -10,7 +10,7 @@
 
 <br><br><br>
 
-<div id="map" style="width: 500px; height: 700px"></div>
+<div id="map" style="width: 700px; height: 500px"></div>
 
 <script>
 // Load localities on change of City
@@ -28,5 +28,36 @@ $("#city").change(function() {
 // Load localities on change of City
 
 // Init Default Map
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  var geocoder = new google.maps.Geocoder();
+  document.getElementById('submit').addEventListener('click', function() {
+    geocodeAddress(geocoder, map);
+  });
+}
 // Init Default Map
+
+// Function for reloading a map based on the locality select
+function geocodeAddress(geocoder, resultsMap) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      resultsMap.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+// Function for reloading a map based on the locality select
 </script>
+
+<!-- Load Google API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiGyMd3TZy5gD4JbIVulawUBJ-h5DByHs&signed_in=true&callback=initMap" async defer></script>
+<!-- Load Google API -->
