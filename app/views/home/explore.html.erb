@@ -3,7 +3,7 @@
 <br><br><br>
 
 <div id="replace_localities">
-  <select id="suffix">
+  <select id="locality">
     <option value="">Select locality</option>
   </select>
 </div>
@@ -13,32 +13,34 @@
 <div id="map" style="width: 700px; height: 500px"></div>
 
 <script>
-// Load localities on change of City
-$("#city").change(function() {
-  $.ajax({
-    type: "POST",
-    url: '/get_localities',
-    dataType: 'html',
-    data: { city_id: $(this).val() },
-    success: function(data) {
-      $("#replace_localities").html(data);
-    }
-  });
-});
-// Load localities on change of City
 
-// Init Default Map
-function initMap() {
+$(document).ready(function() {
+
+  // InitMap
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
     center: {lat: -34.397, lng: 150.644}
   });
   var geocoder = new google.maps.Geocoder();
-  document.getElementById('submit').addEventListener('click', function() {
-    geocodeAddress(geocoder, map);
+  // InitMap
+
+  // Load localities on change of City
+  $("#city").change(function() {
+    $.ajax({
+      type: "POST",
+      url: '/get_localities',
+      dataType: 'html',
+      data: { city_id: $(this).val() },
+      success: function(data) {
+        $("#replace_localities").html(data);
+        $("#locality").change(function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+    });
   });
-}
-// Init Default Map
+  // Load localities on change of City
+});
 
 // Function for reloading a map based on the locality select
 function geocodeAddress(geocoder, resultsMap) {
@@ -59,5 +61,5 @@ function geocodeAddress(geocoder, resultsMap) {
 </script>
 
 <!-- Load Google API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiGyMd3TZy5gD4JbIVulawUBJ-h5DByHs&signed_in=true&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiGyMd3TZy5gD4JbIVulawUBJ-h5DByHs"></script>
 <!-- Load Google API -->
