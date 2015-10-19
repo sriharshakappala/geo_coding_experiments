@@ -18,8 +18,9 @@ $(document).ready(function() {
 
   // InitMap
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
-    center: {lat: 21.000, lng: 78.000}
+    zoom: 16,
+    center: {lat: 21.000, lng: 78.000},
+    mapTypeControl: false
   });
   var geocoder = new google.maps.Geocoder();
   // InitMap
@@ -49,10 +50,10 @@ $(document).ready(function() {
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         resultsMap.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: resultsMap,
-          position: results[0].geometry.location
-        });
+        // var marker = new google.maps.Marker({
+        //   map: resultsMap,
+        //   position: results[0].geometry.location
+        // });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
